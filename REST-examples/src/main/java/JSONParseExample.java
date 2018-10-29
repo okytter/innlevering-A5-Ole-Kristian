@@ -18,10 +18,11 @@ public class JSONParseExample {
         //nestedJsonExample();
     }
 
-    public static void objectExample(String jsonObjectString) {
+    public static JSONArray objectExample(String jsonObjectString) {
         System.out.println("-------------------------------");
         System.out.println("Test JSON Object parsing");
         System.out.println("-------------------------------");
+        JSONArray jsonArray = new JSONArray();
 
         // JSON object example
         // We start with a String in JSON notation. It describes an object
@@ -57,6 +58,9 @@ public class JSONParseExample {
                 System.out.println("The object contains field 'msg' with value "
                         + msg);
             }
+            if(jsonObject.has("arguments")) {
+                jsonArray = jsonObject.getJSONArray("arguments");
+            }
 
             // We can also change some fields in the JSONObject
             //jsonObject.put("year", 2018);
@@ -74,21 +78,28 @@ public class JSONParseExample {
             System.out.println("Got exception in JSON parsing: " + e.getMessage());
         }
         System.out.println("");
+        return jsonArray;
     }
 
-    private static void arrayExample() {
+    public static String arrayExample(JSONArray jsonArray) {
+        String returnString = "";
         System.out.println("-------------------------------");
         System.out.println("Test JSON Array parsing");
         System.out.println("-------------------------------");
-        String jsonArrayString = "[12, 7, 8, 9]";
-        System.out.println("Starting json: " + jsonArrayString);
+        //String jsonArrayString = "[12, 7, 8, 9]";
+        System.out.println("Starting json: ");
         try {
-            JSONArray jsonArray = new JSONArray(jsonArrayString);
             System.out.println("The array has " + jsonArray.length() + " items:");
-            for (int i = 0; i < jsonArray.length(); ++i) {
-                System.out.println("  " + jsonArray.getInt(i));
-            }
+            //for (int i = 0; i < jsonArray.length(); ++i) {
+              //  System.out.println("  " + jsonArray.getString(i));
+            //}
 
+
+            if(jsonArray.getString(0) instanceof String)
+            {
+                returnString = jsonArray.getString(0);
+            }
+            /**
             // We can add elements to the JSON array. And they don't have
             // all to be of same type
             jsonArray.put(5.6);
@@ -109,6 +120,7 @@ public class JSONParseExample {
                 String s = (String) elem5;
                 System.out.println("Elem5 is a string: " + s);
             }
+             */
 
             System.out.println("The whole array as a string: "
                     + jsonArray.toString());
@@ -118,6 +130,7 @@ public class JSONParseExample {
                     + e.getMessage());
         }
         System.out.println("");
+        return returnString;
     }
 
     private static void nestedJsonExample() {

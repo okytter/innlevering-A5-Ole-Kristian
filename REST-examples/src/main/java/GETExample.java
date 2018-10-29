@@ -39,6 +39,7 @@ public class GETExample {
      * @param path     Relative path in the API.
      */
     public String sendGet(String path) {
+        String returnString = "";
         try {
             String url = BASE_URL + path;
             URL urlObj = new URL(url);
@@ -56,7 +57,7 @@ public class GETExample {
                 stream.close();
                 System.out.println("Response from the server:");
                 System.out.println(responseBody);
-                return responseBody;
+                returnString = responseBody;
             } else {
                 String responseDescription = con.getResponseMessage();
                 System.out.println("Request failed, response code: " + responseCode + " (" + responseDescription + ")");
@@ -67,7 +68,7 @@ public class GETExample {
             System.out.println("Something went wrong: " + e.getMessage());
             e.printStackTrace();
         }
-        return "";
+        return returnString;
     }
 
     /**

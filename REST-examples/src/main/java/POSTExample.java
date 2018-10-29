@@ -48,7 +48,8 @@ public class POSTExample {
      * @param path     Relative path in the API.
      * @param jsonData The data in JSON format that will be posted to the server
      */
-    public void sendPost(String path, JSONObject jsonData) {
+    public String sendPost(String path, JSONObject jsonData) {
+        String response = "";
         try {
             String url = BASE_URL + path;
             URL urlObj = new URL(url);
@@ -73,6 +74,7 @@ public class POSTExample {
                 stream.close();
                 System.out.println("Response from the server:");
                 System.out.println(responseBody);
+                response = responseBody;
             } else {
                 String responseDescription = con.getResponseMessage();
                 System.out.println("Request failed, response code: " + responseCode + " (" + responseDescription + ")");
@@ -83,6 +85,7 @@ public class POSTExample {
             System.out.println("Something went wrong: " + e.getMessage());
             e.printStackTrace();
         }
+        return response;
     }
 
     /**
