@@ -1,4 +1,6 @@
 import org.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
+
 
 public class Main {
 
@@ -47,7 +49,43 @@ public class Main {
             String element1 = parsing.arrayExample(JSONParseExample.objectExample(responseString2));
             task2Solved.put("msg", element1);
             ans.sendPost(solvePath, task2Solved);
+            //task 3 completed
+            String path3 = "dkrest/gettask/3?sessionId=" + sessionID;
+            String responseString3 = getTask.sendGet(path3);
+            JSONObject task3Solved = new JSONObject();
+            task3Solved.put("sessionId", sessionID);
+            String sum = JSONParseExample.arrayExample(JSONParseExample.objectExample(responseString3));
+            task3Solved.put("result", Integer.parseInt(sum));
+            ans.sendPost(solvePath, task3Solved);
+            //task 4 completed
+            String path4 = "dkrest/gettask/4?sessionId=" + sessionID;
+            String responseString4 = getTask.sendGet(path4);
+            JSONObject task4Solved = new JSONObject();
+            task4Solved.put("sessionId", sessionID);
+            String encryptedCode = JSONParseExample.arrayExample(JSONParseExample.objectExample(responseString4));
+            int pin = decryptionOfMD5(encryptedCode);
+            task4Solved.put("pin", pin);
+            ans.sendPost(solvePath, task4Solved);
+            //secret task
+            String path5 = "dkrest/gettask/2016?sessionId=" + sessionID;
+            String responsString5 = getTask.sendGet(path5);
+            JSONObject secretTask = new JSONObject();
+            secretTask.put("sessionId", sessionID);
+            //result feedback
+            String resultPath = "dkrest/results/" + sessionID;
+            getTask.sendGet(resultPath);
         }
+    }
+
+    private static int decryptionOfMD5(String encryptedCode) {
+        int pin = 0;
+        for(int i = 0000; i <= 9999; i++) {
+            String result = DigestUtils.md5Hex(Integer.toString(i));
+            if(encryptedCode.equals(result)){
+                pin = i;
+            }
+        }
+        return pin;
     }
 
 }

@@ -95,9 +95,18 @@ public class JSONParseExample {
             //}
 
 
-            if(jsonArray.getString(0) instanceof String)
-            {
+            if(jsonArray.getString(0) != null) {
                 returnString = jsonArray.getString(0);
+            }
+
+            if(jsonArray.length() > 1){
+                int sum = 1;
+            for(int i = 0; i < jsonArray.length(); i++) {
+                sum = sum * jsonArray.getInt(i);
+            }
+                System.out.println("\n" + "\n");
+                System.out.println("the multiplication product is:  " + sum);
+            returnString = Integer.toString(sum);
             }
             /**
             // We can add elements to the JSON array. And they don't have
@@ -130,6 +139,7 @@ public class JSONParseExample {
                     + e.getMessage());
         }
         System.out.println("");
+        System.out.println("returnstring contains:  " + returnString);
         return returnString;
     }
 
